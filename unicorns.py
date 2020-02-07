@@ -1,5 +1,4 @@
-from random import sample
-
+import random
 
 
 
@@ -16,12 +15,16 @@ def type_switch(argument):
 class Deck:
     def __init__(self):
         card_types = [1, 2, 3, 4, 5]
-        size = 50
+        size = 5
         self.deck = []
         for i in range(size):
-            type = sample(card_types, 1)
+            type = random.sample(card_types, 1)
             self.deck.append(type_switch(type[0]))
 
+    def off_top(self):
+        return self.deck.pop()
+    def put_back(self,card):
+        self.deck.insert(random.randint(0, len(self.deck)),card)
 
  #   def deal(self, n):
  #      return random.sample(self.deck, n)
@@ -72,6 +75,16 @@ class Stable:
 
 
 deck = Deck()
+
+for d in deck.deck:
+    d.get_name()
+
+print(deck.off_top())
+
+for d in deck.deck:
+    d.get_name()
+
+print(deck.put_back(Unicorn()))
 
 for d in deck.deck:
     d.get_name()
