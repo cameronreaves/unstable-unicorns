@@ -15,6 +15,8 @@ def type_switch(argument):
     }
     return(switcher.get(argument))
 
+
+
 # Deck / Piles
 
 class Deck:
@@ -56,7 +58,7 @@ class Card:
         return self.name
 
     def get_name(self):
-        print(self.name)
+        return self.name
 
 class Unicorn(Card):
     def __init__(self):
@@ -100,21 +102,41 @@ class Player:
         else:
             print("Sorry there is no trash")
 
-    def from_hand_to_deck(self):
-        main_deck.to_deck(self.hand.pop())
+    def from_hand_to_deck(self,card):
+        new = self.check_and_take(card)
+        if new:
+            main_deck.to_deck(new)
+            return True
+        else:
+            return False
 
-    def from_hand_to_trash(self):
-        main_trash.to_trash(self.hand.pop())
+    def from_hand_to_trash(self,card):
+        new = self.check_and_take(card)
+        if new:
+            main_trash.to_trash(new)
+            return True
+        else:
+            return False
 
-    def put_stable(self):
-        self.my_stable.stable.append(self.hand.pop())
+    def put_stable(self, card):
+        new = self.check_and_take(card)
+        if new:
+            self.my_stable.stable.append(new)
+            return True
+        else:
+            return False
 
     def show_hand(self):
         for h in self.hand:
             print(h)
+
+    def get_hand(self):
+        return self.hand
+
     def show_stable(self):
         for s in self.my_stable.stable:
             print(s)
+
     def count_uni_stable(self):
         count = 0
         for s in self.my_stable.stable:
@@ -122,6 +144,12 @@ class Player:
                 count += 1
         return count
 
+    def check_and_take(self, card_name):
+        for i in range(len(self.hand)):
+            if self.hand[i].get_name() == card_name:
+                card =  self.hand[i]
+                del self.hand[i]
+                return card
 
 # Stable
 
@@ -131,24 +159,11 @@ class Stable:
 
 main_deck = Deck()
 main_trash = Trash()
-player1 = Player("Cam")
-running = True
-c = 0
-while c < 4:
-
-    play = input("Play card (yes) or Draw again (no)")
-    if play.lower().strip() == "yes":
-        player1.put_stable()
-    else:
-        player1.draw_deck()
-    c += 1
+me = Player("Cam")
 
 
-player1.show_hand()
-print("\n")
-player1.show_stable()
-# me = Player("Cam")
-
+# print("Hello")
+# print(me.check_if_card("Unicorn"))
 # me.show_hand()
 # print("\n")
 # main_trash.show_trash()
