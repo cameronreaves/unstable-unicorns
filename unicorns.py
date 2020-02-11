@@ -1,7 +1,7 @@
 import random
 
 #set rules
-start_hand = 7
+start_hand = 10
 card_types = [1, 2, 3, 4, 5]
 size = 50
 
@@ -151,6 +151,14 @@ class Player:
                 del self.hand[i]
                 return card
 
+    def steal_my_from_stable(self,card_name):
+        if len(self.my_stable.stable) > 0:
+            main_trash.to_trash(self.my_stable.stable.pop())
+            return True
+        return False
+
+
+
 # Stable
 
 class Stable:
@@ -159,7 +167,56 @@ class Stable:
 
 main_deck = Deck()
 main_trash = Trash()
-me = Player("Cam")
+players = []
+#create players for the game
+players.append(Player("Cam"))
+players.append(Player("Naomi"))
+run = True
+
+players[0].show_hand()
+players[1].show_hand()
+players[1].put_stable("Unicorn")
+
+
+# print("""
+# Welcome to Unicorns!
+# The Goal of the Game is to get X unicorns in your stable.
+# Magic cards take away an opponent's unicorn from their stable
+# Upgrade cards give you an extra turn
+# Downgrade cards take away your opponents turn
+# Instant cards do nothing!
+# """)
+#
+# while(run):
+# #for each player in the game
+#     for i in range(len(players)):
+#         turn = True
+#         ##turn
+#         while(turn):
+#             ply = players[i]
+#             print("It's your turn,  " + str(ply))
+#             print("Here is your hand \n")
+#             ply.show_hand()
+#             print("Here is your stable \n")
+#             ply.show_stable()
+#             action = input("\n Type card name or type draw ----->  ")
+#             if action == "draw":
+#                 ply.draw_deck()
+#             else:
+#                 suc = ply.put_stable(action)
+#                 if suc:
+#                     print("You played the " + action + " card to your stable")
+#                     turn = False
+#                 else:
+#                     print("Card not in your hand")
+#         unis = ply.count_uni_stable()
+#         if unis > 2:
+#             print(str(ply) + " is the winner")
+#             run = False
+
+
+
+
 
 
 # print("Hello")
