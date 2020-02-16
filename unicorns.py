@@ -138,10 +138,12 @@ class Player:
             print(s)
 
     def check_stable(self):
-        types = ["Unicorn", "Upgrade", "Downgrade", "Magic", "Instant"]
+        types = ["Unicorn", "Upgrade", "Downgrade", "Magic"]
         u_count = 0
         up_count = 0
         down_count = 0
+        m_count = 0
+        i_count = 0
         for s in self.my_stable.stable:
             if str(s) == types[0]:
                 u_count += 1
@@ -149,7 +151,12 @@ class Player:
                 up_count += 1
             elif str(s) == types[2]:
                 down_count += 1
-        counts = [u_count, up_count, down_count]
+            elif str(s) == types[3]:
+                m_count += 1
+            else:
+                i_count += 1
+
+        counts = [u_count, up_count, down_count, m_count, i_count]
         return counts
 
 
@@ -195,6 +202,10 @@ players.append(Player("Cam"))
 players.append(Player("Naomi"))
 run = True
 down = False
+magic = False
+instant = False
+
+
 # players[1].show_hand()
 # print("\n")
 # players[1].put_stable("Unicorn")
@@ -226,7 +237,7 @@ down = False
 # Magic cards take away an opponent's unicorn from their stable 
 # Upgrade cards give you two extra cards your next turn
 # Downgrade cards reduce your opponents hand to 3 cards
-# Instant cards block your opponents card that they just played
+# Instant cards skip your opponents turn
 #""")
 
 while(run):
@@ -240,6 +251,10 @@ while(run):
             ply = players[i]
             print("It's your turn,  " + str(ply))
             if new_turn:
+                if instant:
+                    print("Your opponent skipped your turn, you fool. ")
+                    instant = False
+                    break
                 ply.draw_deck()
                 for i in range(ply.check_stable()[1]):
                     print("Upgrade, drawing again!")
@@ -250,6 +265,12 @@ while(run):
                     print("\n Your opponent played a downgrade card! Reducing your hand.")
                     ply.reduce_hand()
                     down = False
+                if magic:
+                    if ply.steal_my_from_stable("Unicorn"):
+                        print("\n Your opponent played a magic card! Your unicorn go bye bye!")
+                    else:
+                        print("\n What an idiot, his magic card gone now")
+                    magic = False
 
             print("\n HAND")
             ply.show_hand()
@@ -263,12 +284,18 @@ while(run):
                 suc = ply.put_stable(action)
                 if suc:
                     print("You played the " + action + " card to your stable")
+                    #checks if that card was a downgade card
                     if ply.check_stable()[2] > 0:
-                        # print("You have a downgrade card! Reducing your hand.")
-                        # ply.reduce_hand()
-                        print(action)
                         down = True
                         ply.steal_my_from_stable("Downgrade")
+                    #checks if card was a magic card
+                    elif ply.check_stable()[3] > 0:
+                        magic = True
+                        ply.steal_my_from_stable("Magic")
+                    #checks if card was an instant card
+                    elif ply.check_stable()[4] > 0:
+                        instant = True
+                        ply.steal_my_from_stable("Instant")
                     turn = False
                 else:
                     print("Card not in your hand")
