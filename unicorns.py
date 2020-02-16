@@ -1,9 +1,14 @@
 import random
 
-#set rules
+
+
+
+#Set Rules
 start_hand = 3
 card_types = [1, 2, 3, 4, 5]
 size = 50
+
+
 
 def type_switch(argument):
     switcher = {
@@ -194,51 +199,34 @@ class Stable:
     def __init__(self):
         self.stable = []
 
+
+#GAME
+
+
+#Initializing Game
+
 main_deck = Deck()
 main_trash = Trash()
 players = []
-#create players for the game
+
+#Create players for the game
 players.append(Player("Cam"))
 players.append(Player("Naomi"))
+
+#Logicals
 run = True
 down = False
 magic = False
 instant = False
 
-
-# players[1].show_hand()
-# print("\n")
-# players[1].put_stable("Unicorn")
-# players[1].show_stable()
-# bool = players[1].steal_my_from_stable("Unicorn")
-# if bool:
-#     print("worked")
-# else:
-#     print("not famo")
-# print("\n")
-# players[1].show_stable()
-# main_trash.show_trash()
-
-
-# players[0].show_hand()
-# players[0].put_stable("Downgrade")
-# players[0].show_stable()
-# print(players[0].check_stable()[2])
-# players[0].steal_my_from_stable("Downgrade")
-# players[0].show_stable()
-# print(players[0].check_stable()[2])
-
-
-
-
-# print("""
-# Welcome to Unicorns!
-# The Goal of the Game is to get X unicorns in your stable.
-# Magic cards take away an opponent's unicorn from their stable 
-# Upgrade cards give you two extra cards your next turn
-# Downgrade cards reduce your opponents hand to 3 cards
-# Instant cards skip your opponents turn
-#""")
+print("""
+Welcome to Unicorns!
+The Goal of the Game is to get X unicorns in your stable.
+Magic cards take away an opponent's unicorn from their stable 
+Upgrade cards give you two extra cards your next turn
+Downgrade cards reduce your opponents hand to 3 cards
+Instant cards skip your opponents turn
+""")
 
 while(run):
 #for each player in the game
@@ -305,48 +293,3 @@ while(run):
             print(str(ply) + " is the winner")
             run = False
             break
-
-
-
-
-
-
-# print("Hello")
-# print(me.check_if_card("Unicorn"))
-# me.show_hand()
-# print("\n")
-# main_trash.show_trash()
-# print("\n")
-# me.from_hand_to_trash()
-# me.show_hand()
-# print("\n")
-# main_trash.show_trash()
-
-# print("vv")
-#
-# me.put_stable()
-# me.put_stable()
-#
-# me.show_stable()
-#
-# print(me.count_uni_stable())
-
-# deck = Deck()
-#
-# for d in deck.deck:
-#     d.get_name()
-#
-# print(deck.off_top())
-#
-# for d in deck.deck:
-#     d.get_name()
-#
-# print(deck.put_back(Unicorn()))
-#
-# for d in deck.deck:
-#     d.get_name()
-# # bill = Card()
-# # fred = Unicorn()
-#
-# bill.get_name()
-# fred.get_name()
